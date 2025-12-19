@@ -1,6 +1,33 @@
 import streamlit as st
 from prediction_helper import predict
-st.title("Lauki Finance: Credit Risk Modeling")
+st.title("PV Finance: AI-based Credit Risk & Loan Default Prediction")
+st.markdown(
+    "<p style='color:#2ECC71;'>This app predicts <b>credit default risk</b> based on applicant financial and behavioral attributes.</p>",
+    unsafe_allow_html=True
+)
+
+
+with st.sidebar:
+    st.markdown("### ℹ️ Input Guide")
+    st.write("""
+    * Loan Tenure (Months) → No. of months you want to take the loan for
+    
+    * Avg DPD → Average days a payment was delayed  
+    
+    * Delinquency Ratio → % of loan months with missed payments 
+     
+    * Credit Utilization → Used / total credit
+    
+    * Loan Type:
+    
+      * Unsecured Loan: Loan taken without any collateral
+      
+      * Secured Loan: with collateral
+    """)
+    st.markdown(
+        "<hr><p style='font-size:15px;color:#B0B0B0;'>📌 If you have no previous loan history, keep <b>Avg DPD</b> and <b>Delinquency Ratio</b> as <b>0</b>.</p>",
+        unsafe_allow_html=True
+    )
 
 row1=st.columns(3)
 row2=st.columns(3)
@@ -41,17 +68,33 @@ with row4[1]:
 with row4[2]:
     loan_type=st.selectbox("Loan Type", ['Unsecured','Secured'])
 
+st.markdown("""
+**Outputs:**
+- **Default Probability** → Chance of loan default
+- **Credit Score** → Scaled score (300–900)
+- **Rating** → Poor / Average / Good / Excellent
+""")
+st.markdown(
+    "<h6 style='color:#00E5FF; text-align:left;'>👇 CLICK HERE TO CALCULATE RISK</h6 >",
+    unsafe_allow_html=True
+)
+
 
 if st.button("Calculate Risk"):  # For backend prediction_helper.py
     probability, credit_score, rating = predict(age,income,loan_amount, loan_tenure_months, avg_dpd_per_delinquency,
                                                 delinquency_ratio, credit_utilization_ratio, num_open_accounts,
                                                 residence_type, loan_purpose, loan_type)
 
-    st.write(f"DeFault Probability: {probability:.2%}")
-    st.write(f"Credit Score: {credit_score}")
-    st.write(f"Rating: {rating}")
+
+    st.write(f"**DeFault Probability**: {probability:.2%}")
+    st.write(f"**Credit Score**: {credit_score}")
+    st.write(f"**Rating**: {rating}")
 
 
+st.markdown(
+    "<hr><p style='font-size:15px;color:#B0B0B0;'>⚠️ This prediction is for educational purposes only and should not be considered financial advice.</p>",
+    unsafe_allow_html=True
+)
 
 
 
