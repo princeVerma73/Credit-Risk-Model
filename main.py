@@ -37,9 +37,9 @@ row4=st.columns(3)
 with row1[0]:
     age=st.number_input("Age",min_value=18,max_value=100,step=1)
 with row1[1]:
-    income=st.number_input("Income(Annual)",min_value=0,value=1200000)
+    income=st.number_input("Income(Annual)",min_value=0,step=10000,value=1500000)
 with row1[2]:
-    loan_amount=st.number_input("Loan Amount",min_value=0,value=2560000)
+    loan_amount=st.number_input("Loan Amount",min_value=0,step=1000,value=1000000)
 
 
 # Calculate Loan to Income Ratio and display it
